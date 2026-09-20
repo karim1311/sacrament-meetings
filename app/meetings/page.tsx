@@ -10,7 +10,22 @@ export default async function MeetingsPage() {
         throw new Error("Failed to fetch meetings")
     }
 
-    const meetings: SacramentMeeting[] = await response.json()
+    const contentType = response.headers.get("content-type");
+    const text = await response.text();
+
+    console.log("STATUS:", response.status);
+    console.log("CONTENT TYPE:", contentType);
+    console.log("RESPONSE:", text.slice(0, 500));
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch meetings: ${response.status}`);
+    }
+
+    if (!contentType?.includes("application/json")) {
+        throw new Error(`Expected JSON but received ${contentType}`);
+    }
+
+    const meetings: SacramentMeeting[] = JSON.parse(text);
 
     return (
         <main className="mx-auto max-w-4xl p-6">
