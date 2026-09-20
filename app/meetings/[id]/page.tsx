@@ -1,5 +1,5 @@
 import MeetingDetail from "@/components/MeetingDetail";
-import type { SacramentMeeting } from "@/lib/types";
+import { getMeetingById } from "@/lib/meetings-db";
 import { notFound } from "next/navigation";
 
 export default async function MeetingPage({
@@ -9,19 +9,17 @@ export default async function MeetingPage({
 }) {
     const { id } = await params;
 
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/meetings/${id}`
-    );
+    const meetingId = Number(id);
 
-    if (response.status === 404 || response.status === 400) {
+    if (Number.isNaN(meetingId)) {
         notFound()
     }
 
-    if (!response.ok) {
-        throw new Error("Failed to fetch meeting");
-    }
+    const meeting = getMeetingById(meetingId);
 
-    const meeting: SacramentMeeting = await response.json()
+    if (!meeting) {
+        notFound();
+    }
 
     return (
         <main className="p-6">
