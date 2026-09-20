@@ -4,7 +4,7 @@ import type { SacramentMeeting } from "@/lib/types";
 export const dynamic = "force-dynamic"
 
 export default async function MeetingsPage() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/meetings`)
+    const response = await fetch("https://sacrament-meetings-git-peer-code-review-karim1311s-projects.vercel.app/api/meetings")
 
     if (!response.ok) {
         throw new Error("Failed to fetch meetings")
