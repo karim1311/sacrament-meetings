@@ -33,6 +33,20 @@ export default function MeetingsNavLinks() {
                     Current Meeting
                 </Link>
             </li>
+
+            <li>
+                <Link
+                    href="/meetings/new"
+                    className={
+                        pathname === "/meetings/new" ? "active" : ""
+                    }
+                    aria-current={
+                        pathname === "/meetings/new" ? "page" : undefined
+                    }    
+                >
+                    New Meeting
+                </Link>
+            </li>
         </ul>
     )
 }
